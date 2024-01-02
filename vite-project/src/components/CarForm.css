@@ -1,0 +1,16 @@
+.car-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.car-form form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.car-form input,
+.car-form label {
+  margin: 5px 0;
+  padding: 5px;
+}

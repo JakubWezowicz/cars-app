@@ -1,0 +1,10 @@
+.modal {
+  position: fixed;
+  top: 20%;
+  right: 20%;
+  z-index: 100;
+  width: fit-content;
+  padding: 0 50px;
+  border-radius: 10%;
+  background-color: rgba(0, 0, 0, 0.5);
+}

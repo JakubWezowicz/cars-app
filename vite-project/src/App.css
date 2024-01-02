@@ -1,0 +1,29 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  cursor: default;
+  user-select: none;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+}
+li img {
+  margin: 20px;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.delete-button:hover {
+  color: red;
+}
