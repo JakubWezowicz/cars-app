@@ -1,6 +1,10 @@
 import "./CarForm.css";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCars } from "../redux/cars";
 const CarForm = ({ setError, setData, setShowForm }) => {
+  const dispatch = useDispatch();
+  const { carsData } = useSelector((state) => state.cars);
   const addCar = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:8080/api/cars", {
@@ -16,12 +20,11 @@ const CarForm = ({ setError, setData, setShowForm }) => {
       }),
     });
     const data = await response.json();
-    setData((prev) => {
-      if (!prev) {
-        return [{ ...car, ID: data }];
-      }
-      return [...prev, { ...car, ID: data }];
-    });
+    if (carsData) {
+      dispatch(setCars([...carsData, { ...car, ID: data }]));
+    } else {
+      dispatch(setCars([{ ...car, ID: data }]));
+    }
     setShowForm(false);
     setCar({
       Brand: "",

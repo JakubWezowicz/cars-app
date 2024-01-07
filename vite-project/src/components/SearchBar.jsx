@@ -1,5 +1,8 @@
 import { useState } from "react";
-const SearchBar = ({ setData, setError, setIsLoading }) => {
+import { useDispatch } from "react-redux";
+import { setCars } from "../redux/cars";
+const SearchBar = ({ setError, setIsLoading }) => {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,7 +17,7 @@ const SearchBar = ({ setData, setError, setIsLoading }) => {
         return res.json();
       })
       .then((data) => {
-        setData(data);
+        dispatch(setCars(data));
         setIsLoading(false);
       })
       .catch((err) => setError(err.message));
