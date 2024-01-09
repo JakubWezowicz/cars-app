@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCars } from "../redux/cars";
+import { setCars } from "../../redux/cars";
 const SearchBar = ({ setError, setIsLoading }) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    fetch(`http://localhost:8080/api/cars?q=${search}`, {
+    fetch(`/api/cars?q=${search}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

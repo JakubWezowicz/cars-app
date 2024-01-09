@@ -1,13 +1,13 @@
 import "./CarForm.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCars } from "../redux/cars";
+import { setCars } from "../../redux/cars";
 const CarForm = ({ setError, setData, setShowForm }) => {
   const dispatch = useDispatch();
   const { carsData } = useSelector((state) => state.cars);
   const addCar = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8080/api/cars", {
+    const response = await fetch("/api/cars", {
       method: "POST",
       mode: "cors",
       headers: {

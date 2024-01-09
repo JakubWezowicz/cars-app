@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import "./App.css";
-import Modal from "./components/Modal";
-import CarForm from "./components/CarForm";
-import SearchBar from "./components/SearchBar";
+import Modal from "./components/Modal/Modal";
+import CarForm from "./components/CarForm/CarForm";
+import SearchBar from "./components/SearchBar/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setCars } from "./redux/cars";
-import Cars from "./components/Cars";
+import Cars from "./components/Cars/Cars";
 
 function App() {
-  // redux testing
   const dispatch = useDispatch();
   const { carsData } = useSelector((state) => state.cars);
 
@@ -22,7 +21,7 @@ function App() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8080/api/cars", {
+    fetch("/api/cars", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

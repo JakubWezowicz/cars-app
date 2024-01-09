@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import Car from "../assets/car_icon.png";
-import { setCars } from "../redux/cars";
+import Car from "../../assets/car_icon.png";
+import { setCars } from "../../redux/cars";
 
 const Cars = ({
   setMousePosition,
@@ -28,7 +28,7 @@ const Cars = ({
       }
       return car;
     });
-    fetch(`http://localhost:8080/api/cars/${car.ID}`, {
+    fetch(`/api/cars/${car.ID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
