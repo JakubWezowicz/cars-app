@@ -40,6 +40,7 @@ const EditForm = ({ car, setEditing }) => {
             setChangedCar((prev) => ({ ...prev, Brand: e.target.value }))
           }
           placeholder="Brand"
+          value={car.Brand}
         />
         <input
           type="text"
@@ -48,6 +49,7 @@ const EditForm = ({ car, setEditing }) => {
             setChangedCar((prev) => ({ ...prev, Model: e.target.value }))
           }
           placeholder="Model"
+          value={car.Model}
         />
         <input
           type="number"
@@ -59,6 +61,7 @@ const EditForm = ({ car, setEditing }) => {
             }))
           }
           placeholder="Year"
+          value={car.Year}
         />
         <input type="submit" value="Zmień" />
       </form>
