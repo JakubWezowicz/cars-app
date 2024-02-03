@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"testing-project/mongodb"
@@ -42,13 +43,25 @@ func HandlePostCar(w http.ResponseWriter, r *http.Request) {
 func HandlePutCar (w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var car types.Car
-	err := json.NewDecoder(r.Body).Decode(&car)
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = mongodb.ChangeCar(car, id)
-	if err != nil {
-		log.Println(err)
+	var task types.Task
+	data, err := io.ReadAll(r.Body)
+	if err != nil {log.Println(err)}
+	err = json.Unmarshal(data, &car)
+	if err != nil {log.Println(err)}
+	err = json.Unmarshal(data, &task)
+	if err != nil {log.Println(err)}
+	fmt.Println(task)
+	if task.Task == "changeDetails" {
+		fmt.Println(car)
+		err = mongodb.ChangeCar(car, id, task.Task)
+		if err != nil {
+			log.Println(err)
+		}
+	} else if task.Task == "changeAvailable"{
+		err = mongodb.ChangeCar(car, id, task.Task)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 	fmt.Fprint(w, "Changed Car")
 }
@@ -92,4 +105,4 @@ func HandleDeleteCar (w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-}
+	}

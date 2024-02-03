@@ -14,3 +14,8 @@ type Car struct {
 	Year int
 	Available bool
 }
+
+type Task struct {
+	Task string
+}
+

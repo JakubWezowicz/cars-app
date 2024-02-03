@@ -1,6 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import Car from "../../assets/car_icon.png";
 import { setCars } from "../../redux/cars";
+import EditForm from "../EditForm/EditForm";
+import Car from "../../assets/car_icon.png";
+import "./Cars.css";
+import { useState } from "react";
 
 const Cars = ({
   setMousePosition,
@@ -11,6 +14,7 @@ const Cars = ({
 }) => {
   const { carsData } = useSelector((state) => state.cars);
   const dispatch = useDispatch();
+  const [editing, setEditing] = useState(null);
   const handleMove = (e) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
@@ -33,9 +37,9 @@ const Cars = ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(changedCar),
+      body: JSON.stringify({ ...changedCar, task: "changeAvailable" }),
     })
-      .then((res) => {
+      .then(() => {
         dispatch(setCars(newData));
         setCurrentCar(changedCar);
       })
@@ -56,7 +60,14 @@ const Cars = ({
       })
       .catch((err) => setError(err.message));
   };
-
+  const handleEdit = (car) => {
+    console.log(editing?.id, car.ID);
+    if (editing?.id == car.ID) {
+      setEditing((prev) => ({ ...prev, edit: !prev.edit }));
+      return;
+    }
+    setEditing({ id: car.ID, edit: true });
+  };
   return (
     <div className="cars">
       <ul>
@@ -64,7 +75,7 @@ const Cars = ({
           carsData.map((car) => (
             <li key={car.ID}>
               <h3>
-                {car.Brand} {car.Model}{" "}
+                {car.Brand} {car.Model}
               </h3>
               <img
                 src={Car}
@@ -74,9 +85,16 @@ const Cars = ({
                 onMouseLeave={() => setShowModal(false)}
                 onClick={() => editCar(car)}
               />
+              <button onClick={() => handleEdit(car)} className="manage-button">
+                EDIT
+              </button>
+              {editing?.id == car.ID && editing.edit && (
+                <EditForm car={car} key={editing.id} setEditing={setEditing}/>
+              )}
+
               <button
                 onClick={() => handleDelete(car)}
-                className="delete-button"
+                className="delete-button manage-button"
               >
                 DELETE
               </button>

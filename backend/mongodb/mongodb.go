@@ -88,7 +88,7 @@ func InsertCar (car types.NewCar )(id interface{}){
 	return result.InsertedID
 }
 
-func ChangeCar (car types.Car, carId string) (err error){
+func ChangeCar (car types.Car, carId string, task string) (err error){
 	client, ctx,err := createConnection()
 	defer func () {
 	if err = client.Disconnect(ctx); err != nil {
@@ -101,6 +101,16 @@ func ChangeCar (car types.Car, carId string) (err error){
 	coll := client.Database("cars-app").Collection("cars")
 	id, _ := primitive.ObjectIDFromHex(carId)
 	filter := bson.D{{"_id", id}}
+	if task == "changeDetails" {
+		update := bson.D{{"$set", bson.D{{"brand", car.Brand}, {"model", car.Model}, {"year", car.Year}, {"available", car.Available}}}}
+		result, err := coll.UpdateOne(ctx, filter,update)
+		if err != nil {
+			log.Println(err)
+		}
+		fmt.Println(result)
+		fmt.Printf("Changed car's details with id: %v\n", id)
+		return nil
+	}
 	update := bson.D{{"$set", bson.D{{"available", !!car.Available}}}}
 	result, err := coll.UpdateOne(ctx, filter,update)
 	if err != nil {
