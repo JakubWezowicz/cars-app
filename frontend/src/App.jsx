@@ -48,6 +48,7 @@ function App() {
         showModal={showModal}
         setCurrentCar={setCurrentCar}
         setError={setError}
+        isLoading={isLoading}
       />
       <button onClick={() => setShowForm((prev) => !prev)}>Add New Car</button>
       {showForm && <CarForm setError={setError} setShowForm={setShowForm} />}

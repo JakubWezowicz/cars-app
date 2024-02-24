@@ -11,6 +11,7 @@ const Cars = ({
   showModal,
   setCurrentCar,
   setError,
+  isLoading,
 }) => {
   const { carsData } = useSelector((state) => state.cars);
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const Cars = ({
       },
     })
       .then((res) => {
+        console.log(res);
         dispatch(setCars(newData));
         setShowModal(false);
       })
@@ -70,6 +72,10 @@ const Cars = ({
   };
   return (
     <div className="cars">
+      {(!carsData || (carsData.length == 0 && !isLoading)) && (
+        <p>There is no cars</p>
+      )}
+
       <ul>
         {carsData &&
           carsData.map((car) => (
@@ -89,7 +95,7 @@ const Cars = ({
                 EDIT
               </button>
               {editing?.id == car.ID && editing.edit && (
-                <EditForm car={car} key={editing.id} setEditing={setEditing}/>
+                <EditForm car={car} key={editing.id} setEditing={setEditing} />
               )}
 
               <button
